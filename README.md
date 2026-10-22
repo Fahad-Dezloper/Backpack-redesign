@@ -12,17 +12,26 @@ All data is fake.
 - **Book and Trades section:** same-height tabs plus a split view.
 - **Long and Short:** pinned within thumb reach.
 
+## The site
+One page with a switch at the top left: **Backpack** (the phone app) and **Helius** (the RPC playground redesign).
+On a desktop the Backpack app sits in an iPhone frame. On a phone it fills the screen.
+
 ## Run it
     npm install
-    npm run dev:web     # open the printed URL; on desktop it shows a 400x890 phone frame
-    npm run build       # production build in dist/
+    cp .env.example .env.local     # add HELIUS_API_KEY (only the Helius playground needs it)
+    npm run dev:web                # http://localhost:5173
+    npm run build                  # production build in dist/
 
-Deep links: `#home` `#stocks` `#portfolio` `#earn` `#trade/futures`. Add `?bare` for a frameless 400x890 render, `?clean=1` for demo mode.
+Standalone pages: `/backpack.html` (add `?bare` for a frameless 400x890 render, `?clean=1` for demo mode) and `/helius.html`.
 
 ## Deploy on Vercel
-Import the repo. Vercel detects Vite: build command `npm run build`, output directory `dist`. No environment variables.
+Import the repo. Vercel detects Vite: build command `npm run build`, output directory `dist`.
+Add one environment variable, `HELIUS_API_KEY`. It is read only by the serverless function in `api/rpc.js`, so the key never reaches the browser.
+The function only allows five read-only methods on mainnet and devnet, and limits each IP to 40 calls a minute.
 
 ## Layout
+- `shell/` the page with the switch and the iPhone frame
+- `helius/src/` the Helius playground redesign, `api/rpc.js` its server proxy
 - `src/screens/` Home, Trade, Stocks, Portfolio
 - `src/components/` OrderSheet, AutoClose, CandleChart, SplitView, OrderBook and more
 - `src/store.ts` mock account and exchange, `src/useFeed.ts` live ticking

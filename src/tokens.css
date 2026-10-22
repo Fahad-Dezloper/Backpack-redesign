@@ -41,4 +41,5 @@
 
 /* On the Seeker the Chrome viewport is exactly 400dp wide; Chrome supplies the top bar, but the gesture bar overlaps the page. */
 @media (max-width: 500px) { :root { --sat: 0px; --sab: max(24px, env(safe-area-inset-bottom, 0px)); } } /* browser has its own top bar; keep room for the gesture bar */
-html.bare { --sat: 36px; --sab: 24px; } /* frameless 400x890 mode used for pixel comparison */
+html.bare { --sat: 36px; --sab: 24px; }
+html.ios { --sat: 54px; } /* room for the iPhone status bar and Dynamic Island in the desktop phone frame */

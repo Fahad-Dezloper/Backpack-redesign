@@ -2,16 +2,48 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no, maximum-scale=1" />
-    <meta name="theme-color" content="#0E0F14" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="icon" href="/icon-192.png" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>Exchange Redesign</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="description" content="Two redesign concepts: the Backpack Futures trade screen and the Helius RPC playground." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <title>Backpack and Helius redesigns</title>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <header class="bar">
+      <div class="switch" role="tablist" aria-label="Choose a redesign">
+        <i class="pill" aria-hidden="true"></i>
+        <button role="tab" data-app="backpack" aria-selected="true"><span class="dot b"></span>Backpack</button>
+        <button role="tab" data-app="helius" aria-selected="false"><span class="dot h"></span>Helius</button>
+      </div>
+      <p class="what" id="what" aria-live="polite">Futures trade screen</p>
+    </header>
+    <main class="stage" id="stage">
+      <section class="pane" id="p-backpack" data-app="backpack" aria-label="Backpack redesign" hidden>
+        <div class="fit" id="fit">
+          <div class="phone">
+            <i class="btn action"></i><i class="btn volu"></i><i class="btn vold"></i><i class="btn power"></i>
+            <div class="bezel">
+              <div class="screen">
+                <div class="frame" id="f-backpack"></div>
+                <div class="island"></div>
+                <div class="sb" aria-hidden="true">
+                  <span class="time">9:41</span>
+                  <span class="icons">
+                    <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#fff"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#fff"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#fff"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#fff"/></svg>
+                    <svg width="17" height="12" viewBox="0 0 17 12" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M1.5 4.4a10 10 0 0 1 14 0"/><path d="M4 7.2a6.3 6.3 0 0 1 9 0"/><circle cx="8.5" cy="10" r="1" fill="#fff" stroke="none"/></svg>
+                    <svg width="27" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="22" height="12" rx="3.8" fill="none" stroke="#fff" stroke-opacity=".45"/><rect x="2" y="2" width="19" height="9" rx="2.4" fill="#fff"/><rect x="24" y="4.3" width="2" height="4.4" rx="1" fill="#fff" fill-opacity=".5"/></svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="pane" id="p-helius" data-app="helius" aria-label="Helius RPC playground redesign" hidden>
+        <div class="card" id="f-helius"></div>
+      </section>
+    </main>
+    <script type="module" src="/shell/shell.ts"></script>
   </body>
 </html>

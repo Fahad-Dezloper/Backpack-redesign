@@ -7,7 +7,8 @@ import './tokens.css'
 import './app.css'
 import App from './App'
 
-if (location.search.includes('bare')) document.documentElement.classList.add('bare') // flush, frameless (for screenshot diffing)
+if (location.search.includes('bare')) document.documentElement.classList.add('bare')
+if (location.search.includes('ios')) document.documentElement.classList.add('ios') // flush, frameless (for screenshot diffing)
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
