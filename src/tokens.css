@@ -1,0 +1,44 @@
+/* Design tokens: the single place to restyle the whole app.
+   Values sampled from the original app's screenshots (baseline). */
+:root {
+  --bg: #0e0f14;
+  --surface: #14151b;
+  --surface-2: #191a20;
+  --surface-3: #202127;
+  --border: #2c2d32;
+  --text: #ffffff;
+  --text-dim: #8b8d9c;
+  --text-faint: #5d5f6e;
+
+  --accent: #4d94ff;
+  --accent-soft: #0c182f;
+  --up: #1ec98a;
+  --up-soft: #0d1d1b;
+  --up-bar: #0b3326;
+  --up-bar-strong: #0a6b49;
+  --up-btn: #076946;
+  --up-tab: #122322;
+  --down: #ff4d4d;
+  --down-soft: #281419;
+  --down-bar: #3a1b20;
+  --down-bar-strong: #7a2a30;
+  --down-btn: #7c2b2f;
+  --down-tab: #351a1f;
+  --warn: #f5a524;
+
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --font: 'Inter Variable', Inter, system-ui, sans-serif;
+  --label: #8b8d9c;
+  --icon: #7b7d8e;
+  --cta-up-text: #2f9a74;
+  --cta-down-text: #b24a4f;
+  --font-ui: 'Roboto', system-ui, sans-serif; /* tab labels */
+  --sat: 36px; /* status-bar inset (0 on a real phone browser) */
+  --sab: 24px; /* gesture-bar inset */
+}
+
+/* On the Seeker the Chrome viewport is exactly 400dp wide; Chrome supplies the top bar, but the gesture bar overlaps the page. */
+@media (max-width: 500px) { :root { --sat: 0px; --sab: max(24px, env(safe-area-inset-bottom, 0px)); } } /* browser has its own top bar; keep room for the gesture bar */
+html.bare { --sat: 36px; --sab: 24px; } /* frameless 400x890 mode used for pixel comparison */
