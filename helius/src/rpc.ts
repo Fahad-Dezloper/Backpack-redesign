@@ -54,10 +54,13 @@ export async function run(m: string, v: Record<string, string>, _key?: string) {
 /* ---- sample helpers (user-initiated; each makes one real call with the user's own key) ---- */
 const B58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 function b58(s: string): Uint8Array { let n = 0n; for (const c of s) n = n * 58n + BigInt(B58.indexOf(c)); const out: number[] = []; while (n > 0n) { out.unshift(Number(n & 255n)); n >>= 8n } for (const c of s) { if (c === '1') out.unshift(0); else break } return Uint8Array.from(out) }
-export async function recentSignature(key: string, address: string): Promise<string> {
-  const r = await run('getSignaturesForAddress', { address }, key), a = (r.json as any)?.result
-  if (!Array.isArray(a) || !a[0]?.signature) throw new Error('No recent signature found for that address.')
-  return a[0].signature
+// A very busy account, so there is always a fresh finalized transaction to show. Only used to fill the box for the demo.
+const BUSY: Record<Net, string> = { mainnet: 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4', devnet: '11111111111111111111111111111111' }
+export async function recentSignature(_key?: string, _address?: string): Promise<string> {
+  const r = await run('getSignaturesForAddress', { address: BUSY[NET] }, ''), a = (r.json as any)?.result
+  const pick = Array.isArray(a) ? (a.find((x: any) => x.signature && !x.err) ?? a[0]) : null
+  if (!pick?.signature) throw new Error('Could not fetch a sample transaction. Try again in a moment.')
+  return pick.signature
 }
 export async function sampleMessage(key: string, address: string): Promise<string> {
   const r = await run('getLatestBlockhash', {}, key), bh = (r.json as any)?.result?.value?.blockhash

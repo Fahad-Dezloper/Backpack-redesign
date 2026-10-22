@@ -43,7 +43,7 @@ const eff = (it: Item, L: Layout): Box4 => {
 }
 /* the layout you chose in the editor, baked in */
 const DEFAULT_L: Layout = { validators: { dx: -71, dy: 0, s: 0.9 } }
-const BND = { x: -12, y: -14, w: 681, h: 734 } // fixed on purpose: the canvas scale must not change when a box is added or removed
+const BND = { x: -12, y: -8, w: 620, h: 590 } // fixed on purpose: the canvas scale must not change when a box is added or removed
 const LAYOUT_KEY = 'helius-playground-layout-v3'
 const loadLayout = (): Layout => { try { const v = localStorage.getItem(LAYOUT_KEY); return v ? (JSON.parse(v) as Layout) : DEFAULT_L } catch { return DEFAULT_L } }
 function At({ it, L, children }: { it: Item; L: Layout; children: ReactNode }) {
@@ -203,7 +203,7 @@ function Scene(p: { method: string; vals: Record<string, string>; t: number; now
   const gc = [0, 1, 2].map(i => easeOut(seg(t, P.gate[0] + 120 + i * 200, P.gate[0] + 320 + i * 200)))
   const gwLit = running ? (t >= P.send[1] - 120 && t < P.route[0] + 100 ? 1 : 0.0) : 0
   const scan = running ? seg(t, P.gate[0], P.gate[1]) : 0
-  const amb = 0.7 - (running ? 0.42 * easeOut(seg(t, 0, 500)) * (1 - easeOut(seg(t, P.ret[1], P.ret[1] + 500))) : 0) // the cluster steps back while your request is the story
+  const amb = 0.7 // the validators keep their resting look while a request runs
   const frz = useRef<number | null>(null) // the blockhash queue stops mid-growth the moment your request reaches it
   if (running && mod === 'bh' && t >= P.work[0] && t < P.pay[0] + 600) { if (frz.current === null) frz.current = f } else frz.current = null
   const bhPh = frz.current ?? f
@@ -437,7 +437,7 @@ export function Journey({ method, vals, net, runId, resp, err, slotAnchor, slotM
       const body = bodyRef.current, rb = rbox.current, lb = lboxRef.current, run = runRef.current, tm = termRef.current
       if (!body || !rb || !lb || !run || !tm) return
       const B = body.getBoundingClientRect(), R = rb.getBoundingClientRect(), L = lb.getBoundingClientRect(), Rn = run.getBoundingClientRect(), Tm = tm.getBoundingClientRect()
-      const ax = R.left - B.left + 20, ay = R.top - B.top + 44, aw = R.width - 40, ah = R.height - 44 - 16
+      const ax = R.left - B.left + 20, ay = R.top - B.top + 10, aw = R.width - 40, ah = R.height - 20
       const s = Math.max(0.4, Math.min(aw / BND.w, ah / BND.h, 1.6)), ox = ax + (aw - BND.w * s) / 2 - BND.x * s, oy = ay + (ah - BND.h * s) / 2 - BND.y * s
       const to = (px: number, py: number): Pt => pt((px - ox) / s, (py - oy) / s)
       const stacked = L.right > R.left - 8 // narrow screens stack the two boxes, so the lines start at the canvas edge

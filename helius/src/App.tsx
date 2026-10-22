@@ -84,7 +84,7 @@ function Page({ net, setNet: onNet }: { net: Net; setNet: (n: Net) => void }) {
             </div>
             <div className={`xf${fields.length ? ' open' : ''}`} aria-hidden={!fields.length}><div className="xin">
               {shown.map(f => <div key={method + f.key} className="blk fin"><label className="lbl" htmlFor={f.key}>{f.label}</label><input id={f.key} className="input mono" value={vals[f.key] ?? ''} placeholder={f.placeholder} onChange={e => setVals(x => ({ ...x, [f.key]: e.target.value }))} spellCheck={false} tabIndex={fields.length ? 0 : -1} />
-                {(f.key === 'signature' || f.key === 'message') && <button type="button" className="helper" disabled={helping} tabIndex={fields.length ? 0 : -1} onClick={() => help(f.key)}>{helping ? 'Working…' : f.key === 'signature' ? 'Use a recent signature' : 'Generate a sample message'}</button>}</div>)}
+                {(f.key === 'signature' || f.key === 'message') && <button type="button" className="helper" disabled={helping} tabIndex={fields.length ? 0 : -1} onClick={() => help(f.key)}>{helping ? 'Working…' : f.key === 'signature' ? 'Use a random recent signature' : 'Generate a sample message'}</button>}</div>)}
               {helpErr && <p className="helper-err">{helpErr}</p>}
             </div></div>
           </div>

@@ -1,7 +1,7 @@
 import './shell.css'
 
 type App = 'backpack' | 'helius'
-const WHAT: Record<App, string> = { backpack: 'Futures trade screen', helius: 'RPC playground' }
+const WHAT: Record<App, string> = { backpack: 'Best experienced on your phone: open this link on mobile', helius: 'RPC playground' }
 const $ = <T extends Element>(q: string) => document.querySelector(q) as T
 const tabs = [...document.querySelectorAll<HTMLButtonElement>('.switch button')]
 const pill = $<HTMLElement>('.pill'), what = $<HTMLElement>('#what'), fit = $<HTMLElement>('#fit')
@@ -9,7 +9,7 @@ const panes: Record<App, HTMLElement> = { backpack: $('#p-backpack'), helius: $(
 const slots: Record<App, HTMLElement> = { backpack: $('#f-backpack'), helius: $('#f-helius') }
 const loaded: Partial<Record<App, boolean>> = {}
 const phoneMq = matchMedia('(max-width: 500px)')
-let current: App = location.hash === '#helius' ? 'helius' : 'backpack'
+let current: App = location.hash === '#helius' && !phoneMq.matches ? 'helius' : 'backpack' // phones only get Backpack
 let swap = 0
 
 const src = (a: App) => a === 'helius' ? '/helius.html' : (phoneMq.matches ? '/backpack.html?clean=1' : '/backpack.html?bare&ios&clean=1')
@@ -64,6 +64,7 @@ tabs.forEach(b => b.addEventListener('click', () => { if (b.dataset.app !== curr
 addEventListener('resize', () => { fitPhone(); movePill() })
 phoneMq.addEventListener('change', () => { // the layout flipped between desktop and phone: reload the Backpack frame so it matches
   fitPhone()
+  if (phoneMq.matches && current !== 'backpack') show('backpack')
   if (loaded.backpack) { const f = slots.backpack.querySelector('iframe'); if (f) f.src = src('backpack') }
 })
 fitPhone()
